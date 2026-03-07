@@ -27,3 +27,21 @@ jobs:
 
     - name: Publish API
       run: dotnet publish src/api/Quantara.API -c Release -o publish
+      
+    - name: Copy files to VPS
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_KEY }}
+        source: "publish/*"
+        target: "/home/devops/quantara/app"
+
+    - name: Restart Quantara API
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_KEY }}
+        script: |
+          sudo systemctl restart quantara-api
