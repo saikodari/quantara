@@ -3,6 +3,8 @@ name: Quantara CI
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "src/api/**"
 
 jobs:
   build:
