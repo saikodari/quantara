@@ -29,17 +29,17 @@ jobs:
       - name: Deploy to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: devops
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
           source: "src/ui/Quantara.UI/dist/*"
           target: "/var/www/quantara-ui"
 
       - name: Reload Nginx
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: devops
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
           script: |
             sudo systemctl reload nginx
