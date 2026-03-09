@@ -24,7 +24,8 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-
+      - name: present_workingdir
+        run: pwd
       - name: Build React App
         run: npm run build
 
@@ -43,4 +44,5 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: devops
           key: ${{ secrets.SERVER_SSH_KEY }}
+
           script: sudo systemctl reload nginx
