@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import { getWeather } from "../services/weatherService"
-import type { WeatherForecast } from "../services/weatherService"
+import { getWeather, type WeatherForecast } from "../services/weatherService"
 
 function Weather() {
 
@@ -33,4 +32,4 @@ function Weather() {
   )
 }
 
-export default Weather
+export default Weather;
