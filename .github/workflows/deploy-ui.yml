@@ -9,10 +9,6 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: Quantara.UI
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,9 +20,11 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+        working-directory: src/ui/Quantara.UI
 
       - name: Build React App
         run: npm run build
+        working-directory: src/ui/Quantara.UI
 
       - name: Deploy to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -34,7 +32,7 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: devops
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "Quantara.UI/dist/*"
+          source: "src/ui/Quantara.UI/dist/*"
           target: "/var/www/quantara-ui"
 
       - name: Reload Nginx
@@ -43,4 +41,5 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: devops
           key: ${{ secrets.SERVER_SSH_KEY }}
-          script: sudo systemctl reload nginx
+          script: |
+            sudo systemctl reload nginx
